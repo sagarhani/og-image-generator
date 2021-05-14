@@ -4,8 +4,8 @@ import { getScreenshot } from "../../utils/chromium";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const ogCardContent = parseRequest(req);
-
+    //   TODO: Fix this type
+    const ogCardContent: any = parseRequest(req);
     const image = await getScreenshot(
       `${process.env.APP_URL}/template?${new URLSearchParams(ogCardContent)}`,
       process.env.NODE_ENV === "development"
