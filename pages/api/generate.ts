@@ -1,23 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { parseRequest } from "../../utils/urlParser";
+import { getScreenshot } from "../../utils/chromium";
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const html = `<!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-      </head>
-      <body>
-        <h3>This is a sample page</h3>
-      </body>
-    </html>
-    `;
+    const ogCardContent = parseRequest(req);
+
+    const image = await getScreenshot(
+      `${process.env.APP_URL}/template?${new URLSearchParams(ogCardContent)}`,
+      process.env.NODE_ENV === "development"
+    );
     res.status(200);
-    res.setHeader("Content-type", "text/html");
-    res.end(html);
+    res.setHeader("Content-type", "image/jpeg");
+    res.end(image);
   } catch (error) {
     res.status(500);
     res.setHeader("Content-type", "text/html");
