@@ -1,19 +1,44 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
+import {
+  TemplateContainer,
+  Title,
+  Author,
+  WebsiteUrl,
+  Avatar,
+  FooterContainer
+} from "../../styles/templateStyle";
+import { ThemeProvider } from "styled-components";
+import { Themes, ThemeObjType } from "../../utils/themes";
 
 const Template: FC<OgImageContent> = ({
   title,
   author,
   avatar,
-  websiteUrl
+  websiteUrl,
+  theme
 }) => {
+  const [selectedTheme, setSelectedTheme] = useState<ThemeObjType>(
+    Themes["default"]
+  );
+
+  useEffect(() => {
+    setSelectedTheme(Themes[theme]);
+  }, []);
+
   return (
-    <main>
-      <p>Author: {author} </p>
-      <p>title: {title} </p>
-      <p>avatar: {avatar} </p>
-      <p>websiteUrl: {websiteUrl} </p>
-    </main>
+    <ThemeProvider theme={selectedTheme || Themes.default}>
+      <TemplateContainer>
+        <Title>{title}</Title>
+        <FooterContainer>
+          <Avatar alt={author} src={avatar} width={100} height={100} />
+          <div>
+            <Author>{author}</Author>
+            <WebsiteUrl>{websiteUrl}</WebsiteUrl>
+          </div>
+        </FooterContainer>
+      </TemplateContainer>
+    </ThemeProvider>
   );
 };
 

@@ -3,4 +3,5 @@ interface OgImageContent {
   title: string;
   websiteUrl: string;
   avatar: string;
+  theme: string;
 }

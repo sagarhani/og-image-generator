@@ -10,8 +10,6 @@ export const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    height: 100vh;
-    background-image: linear-gradient(0deg, #f794a4 0%, #fdd6bd 100%);    
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   }
