@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Image from "next/image";
 import {
   Container,
   FormContainer,
   PreviewContainer,
-  TextInput
+  TextInput,
+  Label,
+  Dropdown,
+  Header,
+  DownloadButton,
+  CopyButton,
+  ImageActionsContainer,
+  PreviewImageContainer
 } from "../styles/mainPageStyle";
 import { debounce } from "../utils/debounce";
 
@@ -51,34 +57,54 @@ export default function Home() {
 
   return (
     <div>
-      <Head>
-        <title>OG Image Generator</title>
-        <meta name="description" content="OG Image Generator" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Header>Open Graph Image Generator</Header>
       <Container>
         <FormContainer>
           <form onChange={formChangeHandler}>
-            <label htmlFor="title">Title</label>
-            <TextInput id="title" defaultValue={initialState.title} />
-            <label htmlFor="author">Author</label>
-            <TextInput id="author" defaultValue={initialState.author} />
-            <label htmlFor="avatar">Image URL</label>
-            <TextInput id="avatar" defaultValue={initialState.avatar} />
-            <label htmlFor="websiteUrl">Website URL</label>
-            <TextInput id="websiteUrl" defaultValue={initialState.websiteUrl} />
-            <label htmlFor="theme">Theme</label>
-            <select id="theme" defaultValue={initialState.theme}>
-              <option value="default">Default</option>
-              <option value="nightOwl">Night Owl</option>
-            </select>
-            <a href={buildOgImageUrl(formData)} download="og-image.jpeg">
-              download
-            </a>
+            <div>
+              <Label htmlFor="title">Title</Label>
+              <TextInput id="title" defaultValue={initialState.title} />
+            </div>
+            <div>
+              <Label htmlFor="author">Author</Label>
+              <TextInput id="author" defaultValue={initialState.author} />
+            </div>
+            <div>
+              <Label htmlFor="avatar">Image URL</Label>
+              <TextInput id="avatar" defaultValue={initialState.avatar} />
+            </div>
+            <div>
+              <Label htmlFor="websiteUrl">Website URL</Label>
+              <TextInput
+                id="websiteUrl"
+                defaultValue={initialState.websiteUrl}
+              />
+            </div>
+            <div>
+              <Label htmlFor="theme">Theme</Label>
+              <Dropdown id="theme" defaultValue={initialState.theme}>
+                <option value="default">Default</option>
+                <option value="nightOwl">Night Owl</option>
+              </Dropdown>
+            </div>
           </form>
         </FormContainer>
         <PreviewContainer>
-          {imageUrl && <Image src={imageUrl} width={600} height={315} />}
+          {imageUrl && (
+            <PreviewImageContainer>
+              <Image src={imageUrl} width={600} height={315} />
+            </PreviewImageContainer>
+          )}
+          <ImageActionsContainer>
+            <CopyButton>
+              <img src="./copy.svg" className="shadow" />
+              <span>Copy Image URL</span>
+            </CopyButton>
+            <DownloadButton href={imageUrl} download="og-image.jpeg">
+              <img src="./download.svg" className="shadow" />
+              <span>Download Image</span>
+            </DownloadButton>
+          </ImageActionsContainer>
         </PreviewContainer>
       </Container>
     </div>

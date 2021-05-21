@@ -17,19 +17,23 @@ type TitleProps = {
 
 export const Title = styled.h1<TitleProps>`
   color: ${({ theme }) => theme.title};
-  font-size: ${({ titleLength }) => (titleLength > 60 ? "72px" : "100px")};
+  font-size: ${({ titleLength }) => (titleLength > 60 ? "72px" : "84px")};
+  font-family: Poppins;
 `;
 
 export const Author = styled.p`
   color: ${({ theme }) => theme.author};
-  font-size: 32px;
-  font-weight: 700;
+  font-size: 42px;
+  font-weight: 800;
+  font-family: Roboto;
+  letter-spacing: 1.2px;
 `;
 
 export const WebsiteUrl = styled.p`
   color: ${({ theme }) => theme.websiteUrl};
   font-size: 32px;
   font-weight: 200;
+  font-family: PT Mono;
 `;
 
 export const Avatar = styled.img`
