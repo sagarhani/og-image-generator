@@ -29,9 +29,11 @@ const Template: FC<OgImageContent> = ({
   return (
     <ThemeProvider theme={selectedTheme || Themes.default}>
       <TemplateContainer>
-        <Title>{title}</Title>
+        <Title titleLength={title.length}>{title}</Title>
         <FooterContainer>
-          <Avatar alt={author} src={avatar} width={100} height={100} />
+          {avatar && (
+            <Avatar alt={author} src={avatar} width={100} height={100} />
+          )}
           <div>
             <Author>{author}</Author>
             <WebsiteUrl>{websiteUrl}</WebsiteUrl>

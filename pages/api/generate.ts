@@ -7,7 +7,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     //   TODO: Fix this type
     const ogCardContent: any = parseRequest(req);
     const image = await getScreenshot(
-      `${process.env.APP_URL}/template?${new URLSearchParams(ogCardContent)}`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/template?${new URLSearchParams(
+        ogCardContent
+      )}`,
       process.env.NODE_ENV === "development"
     );
     res.status(200);

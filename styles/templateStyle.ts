@@ -11,9 +11,13 @@ export const TemplateContainer = styled.main`
   background-color: ${({ theme }) => theme.background};
 `;
 
-export const Title = styled.h1`
+type TitleProps = {
+  titleLength: number;
+};
+
+export const Title = styled.h1<TitleProps>`
   color: ${({ theme }) => theme.title};
-  font-size: 100px;
+  font-size: ${({ titleLength }) => (titleLength > 60 ? "72px" : "100px")};
 `;
 
 export const Author = styled.p`

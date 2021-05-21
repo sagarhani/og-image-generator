@@ -1,3 +1,9 @@
+import { DefaultTheme } from "styled-components";
+
+declare module "styled-components" {
+  export interface DefaultTheme extends ThemeObjType {}
+}
+
 export const Themes: ThemesType = {
   nightOwl: {
     background: "rgb(1, 22, 39)",
@@ -13,13 +19,13 @@ export const Themes: ThemesType = {
   }
 };
 
-export type ThemeObjType = {
+export interface ThemeObjType {
   background: string;
   title: string;
   websiteUrl: string;
   author: string;
-};
+}
 
 type ThemesType = {
-  [key: string]: ThemeObjType;
+  [key: string]: DefaultTheme;
 };
