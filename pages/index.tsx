@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
-  Container,
+  PageContainer,
+  MainContainer,
   FormContainer,
   PreviewContainer,
   TextInput,
@@ -11,21 +12,30 @@ import {
   DownloadButton,
   CopyButton,
   ImageActionsContainer,
-  PreviewImageContainer
+  PreviewImageContainer,
+  SvgWithShadow,
+  ContentContainer,
+  Heading,
+  Paragraph,
+  FooterContainer,
+  Link,
+  CodeContainer
 } from "../styles/mainPageStyle";
 import { debounce } from "../utils/debounce";
+import { copyToClipboard } from "../utils/copyToClipboard";
 
 const initialState = {
   title: "Dynamic Open Graph Image Generator",
   author: "Sagar Hani",
   websiteUrl: "https://sagarhani.in",
-  avatar: "https://avatars.githubusercontent.com/u/6933389?v=4",
+  avatar: "https://avatars.githubusercontent.com/u/6933389",
   theme: "nightOwl"
 };
 
 export default function Home() {
   const [formData, setFormData] = useState(initialState);
   const [imageUrl, setImageUrl] = useState("");
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setImageUrl(buildOgImageUrl(formData));
@@ -55,10 +65,35 @@ export default function Home() {
     return url.toString();
   };
 
+  const copyClickHandler = () => {
+    copyToClipboard(imageUrl);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 800);
+  };
+
   return (
-    <div>
-      <Header>Open Graph Image Generator</Header>
-      <Container>
+    <PageContainer>
+      <Header>Dynamic Open Graph Image Generator</Header>
+      <MainContainer>
+        <PreviewContainer>
+          {imageUrl && (
+            <PreviewImageContainer>
+              <Image src={imageUrl} width={600} height={315} />
+            </PreviewImageContainer>
+          )}
+          <ImageActionsContainer>
+            <CopyButton onClick={copyClickHandler}>
+              <SvgWithShadow src="./copy.svg" />
+              <span>{copied ? "Copied !" : "Copy Image URL"}</span>
+            </CopyButton>
+            <DownloadButton href={imageUrl} download="og-image.jpeg">
+              <SvgWithShadow src="./download.svg" />
+              <span>Download Image</span>
+            </DownloadButton>
+          </ImageActionsContainer>
+        </PreviewContainer>
         <FormContainer>
           <form onChange={formChangeHandler}>
             <div>
@@ -89,24 +124,51 @@ export default function Home() {
             </div>
           </form>
         </FormContainer>
-        <PreviewContainer>
-          {imageUrl && (
-            <PreviewImageContainer>
-              <Image src={imageUrl} width={600} height={315} />
-            </PreviewImageContainer>
-          )}
-          <ImageActionsContainer>
-            <CopyButton>
-              <img src="./copy.svg" className="shadow" />
-              <span>Copy Image URL</span>
-            </CopyButton>
-            <DownloadButton href={imageUrl} download="og-image.jpeg">
-              <img src="./download.svg" className="shadow" />
-              <span>Download Image</span>
-            </DownloadButton>
-          </ImageActionsContainer>
-        </PreviewContainer>
-      </Container>
-    </div>
+      </MainContainer>
+      <ContentContainer>
+        <Heading>What is this ?</Heading>
+        <Paragraph>
+          This is a dynamic{" "}
+          <Link href="https://ogp.me/" target="_blank">
+            Open Graph
+          </Link>{" "}
+          image generator which generates the open graph image for your webpage
+          dynamically.{" "}
+        </Paragraph>
+      </ContentContainer>
+      <ContentContainer>
+        <Heading>How to use it ?</Heading>
+        <span>
+          Add this url as a content to your{" "}
+          <Link
+            href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/The_head_metadata_in_HTML#other_types_of_metadata"
+            target="_blank"
+          >
+            og:property of meta tag
+          </Link>{" "}
+          as below :
+        </span>
+        <CodeContainer>
+          <span>
+            {`<meta property="og:image" content="http://localhost:3000/api/generate?title=`}
+          </span>
+          <span className="highlight">YOUR_TITLE</span>
+          <span>&author=</span>
+          <span className="highlight">AUTHOR_NAME</span>
+          <span>&avatar=</span>
+          <span className="highlight">IMAGE_URL</span>
+          <span>&websiteUrl=</span>
+          <span className="highlight">WEBSITE_URL</span>
+          <span>&theme=</span>
+          <span className="highlight">THEME_NAME</span>
+          <span>{`" />`}</span>
+        </CodeContainer>
+        <span>
+          and replace all <span className="highlight">VALUES</span> with your
+          desired values.
+        </span>
+      </ContentContainer>
+      <FooterContainer>Made with ❤️ using NextJS</FooterContainer>
+    </PageContainer>
   );
 }

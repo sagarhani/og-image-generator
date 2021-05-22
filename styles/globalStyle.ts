@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-
+import { colors } from "./tokens";
 export const GlobalStyle = createGlobalStyle`
 * {
     margin: 0;
@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     font-family: Poppins;
+    background-color:${colors.bodyBackground}
   }
   
   a {
