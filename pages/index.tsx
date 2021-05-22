@@ -173,7 +173,7 @@ export default function Home() {
         </span>
         <CodeContainer>
           <span>
-            {`<meta property="og:image" content="http://localhost:3000/api/generate?title=`}
+            {`<meta property="og:image" content="${process.env.NEXT_PUBLIC_APP_URL}/api/generate?title=`}
           </span>
           <span className="highlight">YOUR_TITLE</span>
           <span>&author=</span>
