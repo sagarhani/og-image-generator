@@ -26,10 +26,17 @@ const Template: FC<OgImageContent> = ({
     setSelectedTheme(Themes[theme]);
   }, []);
 
+  const trimString = (string: string, count: number) => {
+    if (string && string.length > count) {
+      return string.substr(0, count) + "\u2026";
+    }
+    return string;
+  };
+
   return (
     <ThemeProvider theme={selectedTheme || Themes.default}>
       <TemplateContainer>
-        <Title titleLength={title.length}>{title}</Title>
+        <Title titleLength={title.length}>{trimString(title, 70)}</Title>
         <FooterContainer>
           {avatar && (
             <Avatar alt={author} src={avatar} width={100} height={100} />
