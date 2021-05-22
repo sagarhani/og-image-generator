@@ -19,7 +19,8 @@ import {
   Paragraph,
   FooterContainer,
   Link,
-  CodeContainer
+  CodeContainer,
+  PreviewImageLoading
 } from "../styles/mainPageStyle";
 import { debounce } from "../utils/debounce";
 import { copyToClipboard } from "../utils/copyToClipboard";
@@ -36,9 +37,11 @@ export default function Home() {
   const [formData, setFormData] = useState(initialState);
   const [imageUrl, setImageUrl] = useState("");
   const [copied, setCopied] = useState(false);
+  const [isImageLoading, setImageLoading] = useState(true);
 
   useEffect(() => {
     setImageUrl(buildOgImageUrl(formData));
+    setImageLoading(true);
   }, [formData]);
 
   const formChangeHandler = debounce(e => {
@@ -78,11 +81,26 @@ export default function Home() {
       <Header>Dynamic Open Graph Image Generator</Header>
       <MainContainer>
         <PreviewContainer>
-          {imageUrl && (
-            <PreviewImageContainer>
-              <Image src={imageUrl} width={600} height={315} />
-            </PreviewImageContainer>
-          )}
+          <PreviewImageContainer isLoading={isImageLoading}>
+            <>
+              {isImageLoading && (
+                <PreviewImageLoading>
+                  <span>Loading...</span>
+                </PreviewImageLoading>
+              )}
+              {imageUrl && (
+                <Image
+                  priority
+                  src={imageUrl}
+                  width={600}
+                  height={315}
+                  onLoad={() => {
+                    setImageLoading(false);
+                  }}
+                />
+              )}
+            </>
+          </PreviewImageContainer>
           <ImageActionsContainer>
             <CopyButton onClick={copyClickHandler}>
               <SvgWithShadow src="./copy.svg" />

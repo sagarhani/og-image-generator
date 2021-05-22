@@ -45,11 +45,11 @@ export const TextInput = styled.input`
 
   :focus-visible {
     outline: none;
-    box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
+    box-shadow: 0 2px 6px rgb(1 12 14 / 10%);
   }
 
   :hover {
-    box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
+    box-shadow: 0 2px 6px rgb(1 12 14 / 10%);
     border-color: ${colors.secondary};
   }
 `;
@@ -76,6 +76,7 @@ export const Dropdown = styled.select`
 
   :hover {
     cursor: pointer;
+    box-shadow: 0 2px 6px rgb(1 12 14 / 10%);
   }
 `;
 
@@ -84,8 +85,8 @@ export const Header = styled.header`
   align-items: center;
   justify-content: center;
   height: 64px;
-  font-weight: bold;
-  font-size: 24px;
+  font-weight: 700;
+  font-size: 28px;
   color: ${colors.primary};
   margin: 12px 0 14px 0;
 `;
@@ -116,7 +117,7 @@ const buttonStyles = `
 
   :hover {
     cursor: pointer;
-    box-shadow: 0 3px 5px 0 rgb(1 12 14 / 25%);
+    box-shadow: 0 3px 5px 0 rgb(1 12 14 / 45%);
   }
 `;
 
@@ -147,8 +148,14 @@ export const ImageActionsContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-export const PreviewImageContainer = styled.div`
+type ImagePreviewProps = {
+  isLoading: boolean;
+};
+
+export const PreviewImageContainer = styled.div<ImagePreviewProps>`
   box-shadow: 4px 6px 7px 0px rgb(0 0 0 / 20%);
+  filter: ${({ isLoading }) => (isLoading ? "blur(2px)" : "")};
+  max-height: 315px;
 
   :hover {
     cursor: pointer;
@@ -229,4 +236,16 @@ export const CodeContainer = styled.div`
     cursor: pointer;
     opacity: 0.8;
   }
+`;
+
+export const PreviewImageLoading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  color: ${colors.primary};
+  z-index: 1;
+  font-size: 24px;
+  top: 50%;
+  left: 29%;
 `;
