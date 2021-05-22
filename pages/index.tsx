@@ -138,6 +138,11 @@ export default function Home() {
               <Dropdown id="theme" defaultValue={initialState.theme}>
                 <option value="default">Default</option>
                 <option value="nightOwl">Night Owl</option>
+                <option value="github">Github</option>
+                <option value="matrix">Matrix</option>
+                <option value="dracula">Dracula</option>
+                <option value="tinacious">Tinacious</option>
+                <option value="shadesOfPurple">Shades of Purple</option>
               </Dropdown>
             </div>
           </form>
