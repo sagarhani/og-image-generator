@@ -1,5 +1,6 @@
 import { GlobalStyle } from "../styles/globalStyle";
 import Head from "next/head";
+import { Analytics } from "@vercel/analytics/react";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -30,6 +31,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <GlobalStyle />
       <Component {...pageProps} />
+      <Analytics />
     </>
   );
 }
